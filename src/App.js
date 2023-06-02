@@ -42,20 +42,23 @@ class App extends Component {
             <div className="sign_out">Sign out</div>
           </header>
           <nav>
-            <div className="login" onClick={e=>this.login()}>Log in with your Castlight email</div>
+            <div className="login" onClick={e=>this.login()}>Log in with Gmail</div>
           </nav>
         </React.Fragment>
       )}/>
     </React.Fragment>
     )        
   }
+  fakelogin(){
+    return new Promise((resolve, reject)=>setTimeout(()=>resolve(), 100))
+  }
   login(){
     window.gapi.load('auth2', ()=>{ 
-      console.log("gapi loaded")
+//      console.log("gapi loaded")
       window.gapi.auth2.init({scope:'profile email', client_id:'91405226774-r2hr6m03pkgigbkr75h3s35lbrtkr14q.apps.googleusercontent.com'})
+//      window.gapi.auth2.init({scope:'profile email', client_id:'355597262162-bgs094mgj5hpq65rnag20chnqb4unnpf.apps.googleusercontent.com'})
       .then(data=>window.gapi.auth2.getAuthInstance().signIn())
       .then(user=>{
-        console.log(user.getBasicProfile().getEmail())
         this.setState({loggedIn: true})
         this.props.history.push('/home/generic')
       })            
@@ -63,13 +66,12 @@ class App extends Component {
   }
   logout = (res)=>{        
     window.gapi.load('auth2', ()=>{ 
-      console.log("gapi loaded")
+//      console.log("gapi loaded")
       window.gapi.auth2.init({scope:'profile email', client_id:'91405226774-r2hr6m03pkgigbkr75h3s35lbrtkr14q.apps.googleusercontent.com'})
+//      window.gapi.auth2.init({scope:'profile email', client_id:'355597262162-bgs094mgj5hpq65rnag20chnqb4unnpf.apps.googleusercontent.com'})
       .then(data=>window.gapi.auth2.getAuthInstance().signOut().then(data=>this.props.history.push('/')))      
     })
   }
-  componentDidMount() {              
-
-  }
+  componentDidMount() {}
 }
 export default withRouter(App);

@@ -43,7 +43,7 @@ class Home extends Component {
           </div>
         </div>
       </section>) :
-      (<section id="Home" className="nope">Sorry, you are not authorized to view this section</section>)
+      (<section id="Home" className="nope">Loading...</section>)
     )
   }
   check_gapi(){
@@ -57,13 +57,13 @@ class Home extends Component {
       },1000)
     })
   }
-  componentDidMount() {
+  componentDidMount() {      
     this.check_gapi()
       .then(data=>window.gapi.load('auth2', ()=>window.gapi.auth2.init({scope:'profile email', client_id:'91405226774-r2hr6m03pkgigbkr75h3s35lbrtkr14q.apps.googleusercontent.com'})
         .then(data=>this.setState({loggedIn: window.gapi.auth2.getAuthInstance().isSignedIn.get()}))
       ))
 
-    fetch("https://castlight-db.herokuapp.com/config/partners")
+    fetch("https://turnitup.herokuapp.com/config/partners")
     .then(res=>res.json())
     .then(json=>{
       this.setState({cardOn: this.props.match.params.url})
